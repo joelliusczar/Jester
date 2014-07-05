@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Jester.Exceptions
 {
+    [Serializable]
     public class ExpectedExceptionException : Exception
     {
         public ExpectedExceptionException()

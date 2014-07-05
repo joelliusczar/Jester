@@ -8,7 +8,7 @@ namespace Jester
 {
     public class JestAssert
     {
-        public static bool isEqual(string expectedInput, string actualInput)
+        public static bool IsEqual(string expectedInput, string actualInput)
         {
             if (expectedInput == actualInput) {
                 return true;    
@@ -17,7 +17,7 @@ namespace Jester
             throw JestFailedException.GetInstance(expectedInput, actualInput);
         }
 
-        public static bool isEqual(int expectedInput, int actualInput)
+        public static bool IsEqual(int expectedInput, int actualInput)
         {
             if (expectedInput == actualInput)
             {
@@ -27,7 +27,7 @@ namespace Jester
             throw JestFailedException.GetInstance(expectedInput, actualInput);
         }
 
-        public static bool isEqual(bool expectedInput, bool actualInput)
+        public static bool IsEqual(bool expectedInput, bool actualInput)
         {
             if (expectedInput == actualInput)
             {
@@ -37,7 +37,37 @@ namespace Jester
             throw JestFailedException.GetInstance(expectedInput, actualInput);
         }
 
-        public static bool isEqual<T>(T expectedInput, T actualInput)
+        public static bool IsEqual(uint expectedInput, uint actualInput)
+        {
+            if (expectedInput == actualInput)
+            {
+                return true;
+            }
+
+            throw JestFailedException.GetInstance(expectedInput, actualInput);
+        }
+
+        public static bool IsEqual(double expectedInput, double actualInput)
+        {
+            if (expectedInput == actualInput)
+            {
+                return true;
+            }
+
+            throw JestFailedException.GetInstance(expectedInput, actualInput);
+        }
+
+        public static bool IsEqual(char expectedInput, char actualInput)
+        {
+            if (expectedInput == actualInput)
+            {
+                return true;
+            }
+
+            throw JestFailedException.GetInstance(expectedInput, actualInput);
+        }
+
+        public static bool IsEqual<T>(T expectedInput, T actualInput)
         {
             if (expectedInput.Equals(actualInput))
             {

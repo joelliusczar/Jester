@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Jester.Exceptions
 {
+    [Serializable]
     public class JestFailedException: Exception
     {
 

@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="JestAttribute.cs" />
-    <Compile Include="JestClassAttribute.cs" />
+    <Compile Include="Attributes\JestSetupAttribute.cs" />
+    <Compile Include="Exceptions\ExpectedExceptionException.cs" />
+    <Compile Include="Attributes\JestAttribute.cs" />
+    <Compile Include="Attributes\JestClassAttribute.cs" />
+    <Compile Include="JestAssert.cs" />
+    <Compile Include="JesterUtilities.cs" />
+    <Compile Include="MethodInfoVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TesterForm.cs">
       <SubType>Form</SubType>
@@ -52,13 +56,15 @@
     <Compile Include="TesterForm.Designer.cs">
       <DependentUpon>TesterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestResultsEnum.cs" />
+    <Compile Include="Exceptions\JestFailedException.cs" />
+    <Compile Include="JestResultsEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TesterForm.resx">
       <DependentUpon>TesterForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

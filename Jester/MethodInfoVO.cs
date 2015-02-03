@@ -6,6 +6,10 @@ using System.Text;
 
 namespace Jester
 {
+    
+    //the sucess or failure of a test are stored in objects of this class.
+    //A GUI can use the values stored in these properties to display to the user
+    //if a test was successful or not.
     public class MethodTestInfo
     {
         public string MethodName { get; set; }

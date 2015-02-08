@@ -42,10 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\JestSetupAttribute.cs" />
     <Compile Include="Exceptions\ExpectedExceptionException.cs" />
     <Compile Include="Attributes\JestAttribute.cs" />
-    <Compile Include="Attributes\JestClassAttribute.cs" />
     <Compile Include="JestAssert.cs" />
     <Compile Include="JesterUtilities.cs" />
     <Compile Include="MethodInfoVO.cs" />

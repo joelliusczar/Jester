@@ -10,11 +10,23 @@ namespace Jester
     {
         public static void RunTestMethod(MethodInfo m)
         {
+            Object o = RunSetups(m);
+            m.Invoke(o, null);
+        }
+
+        public static T RunCompareMethod<T>(MethodInfo m,params Object[] args)
+        {
+            Object o = RunSetups(m);
+            return (T)m.Invoke(o, args);
+        }
+
+        public static object RunSetups(MethodInfo m)
+        {
             Type t = m.DeclaringType;
-            var o = System.Activator.CreateInstance(t);
-            var setups = t.GetMethods().Where(m2 => m2.GetCustomAttributes(typeof(JestSetupAttribute), false).Length > 0 
+            Object o = System.Activator.CreateInstance(t);
+            var setups = t.GetMethods().Where(m2 => m2.GetCustomAttributes(typeof(JestSetupAttribute), false).Length > 0
                 && m2.IsMethodVoidOrNonValue());
-            foreach (var s in setups)
+            foreach (MethodInfo s in setups)
             {
                 try
                 {
@@ -25,10 +37,9 @@ namespace Jester
                     throw ex.InnerException;
                 }
             }
-            m.Invoke(o, null);
+            return o;
         }
-        
-        //instantiates an object of class: T
+
         public static T Create<T>(params object[] args) where T : class
         {
             try
@@ -43,10 +54,7 @@ namespace Jester
                 throw ex.InnerException;
             }
         }
-        
-        //Accepts an array of objects.
-        //this method determines the type of each object
-        //and returns an array of types for each of the objects
+
         public static Type[] GetArrayOfTypes(object[] args)
         {
             Type[] t = new Type[args.Length];
@@ -56,18 +64,12 @@ namespace Jester
             }
             return t;
         }
-        
-        //formats the error message from an exception to display
+
         public static string GetErrorInfo(Exception ex)
         {
             return string.Format("{0}\r\n\r\n{1}", ex.Message, ex.StackTrace);
         }
-        
-        
-        //calls a method.
-        //if no exceptions were thrown then the test was a success.
-        //if they were, then test failed
-        //SelectTest stores the success values in the testInfo object
+
         public static string SelectTest(MethodInfo method, MethodTestInfo testInfo)
         {
             bool testPassed = true;
@@ -98,12 +100,33 @@ namespace Jester
                 return null;
             }
         }
-        
-        //tests that a method has a void return type and that it accepts no parameters
+
         public static bool IsMethodVoidOrNonValue(this MethodInfo method)
         {
             return method.ReturnType == typeof(void) && method.GetParameters().Length == 0;
         }
+
+        public static MethodInfo[] GetMethodList(Assembly asm)
+        {
+
+            Type[] types = asm.GetTypes();
+            IEnumerable<MethodInfo> allMethods = types.SelectMany(t => t.GetMethods());
+            MethodInfo[] methodList = allMethods.Where(m => m.GetCustomAttributes(typeof(JestAttribute), false).Length > 0
+                && m.IsMethodVoidOrNonValue() ).ToArray();
+            return methodList;
+        }
+
+        public static MethodInfo[] GetMethodListWithArguments(Assembly asm)
+        {
+            Type[] types = asm.GetTypes();
+            IEnumerable<MethodInfo> allMethods = types.SelectMany(t => t.GetMethods());
+            MethodInfo[] methodList = allMethods.Where(m => m.GetCustomAttributes(typeof(JestCompareAttribute), false).Length > 0
+                && m.GetParameters().Length == 1 
+                && !m.GetParameters().Any(p => p.ParameterType == typeof(Object)) ).ToArray();
+            return methodList;
+        }
+
+
 
     }
 }

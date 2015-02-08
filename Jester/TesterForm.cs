@@ -28,16 +28,15 @@ namespace Jester
 
         private void SetupTestsForExecution(Assembly asm)
         {
-            var types = asm.GetTypes();
-            var allMethods = types.SelectMany(t => t.GetMethods());
-            var methodList = allMethods.Where(m => m.GetCustomAttributes(typeof(JestAttribute), false).Length > 0
-                && m.IsMethodVoidOrNonValue()).ToArray();
+            var methodList = JesterUtilities.GetMethodList(asm);
             foreach (var m in methodList)
             {
                     AddTest(m);
 
             }
         }
+
+        
 
         private void AddTest(MethodInfo m)
         {

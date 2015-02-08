@@ -37,7 +37,10 @@ namespace Jester
         }
 
         
-
+        /// <summary>
+        /// Adds a method to a dictionary so it can be retrieved with a string or something like that.
+        /// </summary>
+        /// <param name="m">the method that we want to store in our dictionary</param>
         private void AddTest(MethodInfo m)
         {
             ListViewItem.ListViewSubItem[] subItems =
@@ -60,6 +63,9 @@ namespace Jester
             methodDictionary.Add(m.Name, methodTest);
         }
 
+        /// <summary>
+        /// I'm setting some gui options here where it is out of the way
+        /// </summary>
         private void SetListViewProperties()
         {
             listView1.MultiSelect = false;
@@ -75,11 +81,21 @@ namespace Jester
             textBox1.Text = testResult;
         }
 
+        /// <summary>
+        /// Runs the unit test that we just double clicked on
+        /// </summary>
+        /// <param name="methodName">the name of the test we want to run</param>
+        /// <returns>the results of the test</returns>
         private string SelectTest(string methodName)
         {
             return SelectTest(methodDictionary[methodName].Method);
         }
 
+        /// <summary>
+        /// Runs the unit test that we just double clicked on
+        /// </summary>
+        /// <param name="method">The method that is the unit test that we want to run</param>
+        /// <returns>the results of the test</returns>
         private string SelectTest(MethodInfo method)
         {
             
